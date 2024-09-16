@@ -1,0 +1,1076 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "6.4.0-SNAPSHOT",
+        "title": "ms-agency"
+    },
+    "host": "ms-tma-int.descours-cabaud.com:443",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Agency",
+            "description": "Agency Controller"
+        }
+    ],
+    "paths": {
+        "/agency/agencies": {
+            "get": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "Get a page of agencies",
+                "description": "The search requires distributionNetwork, subsidiaryId, parentAgencyId.<br>Field 'distance' may be accompanied by address information OR latitude/longitude",
+                "operationId": "getAllByPageUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "addressLine1",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "addressLine2",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "addressLine3",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "agencyType",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "AGENCY",
+                            "BRANCH"
+                        ]
+                    },
+                    {
+                        "name": "agencyVisibility",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "ALL",
+                            "ECOMMERCE",
+                            "STORE_ONLY"
+                        ]
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distance",
+                        "in": "query",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "distributionNetwork",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "1-based page index (1..N)",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "The page size",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "parentAgencyId",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "paymentType",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "ALL",
+                            "ONLINE",
+                            "TERM"
+                        ]
+                    },
+                    {
+                        "name": "postalCode",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "subsidiaryId",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A page of agencies matching parameters.",
+                        "schema": {
+                            "$ref": "#/definitions/Page«AgencyResponse»"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "The user is not logged in"
+                    },
+                    "403": {
+                        "description": "The logged in user is not authorized to access this resource"
+                    },
+                    "404": {
+                        "description": "The specified resource does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/agency/agencies/{agency-id}": {
+            "get": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "Get an agency by id",
+                "operationId": "getByIdUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "agency-id",
+                        "in": "path",
+                        "description": "agency-id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the agency found by id",
+                        "schema": {
+                            "$ref": "#/definitions/AgencyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "The user is not logged in"
+                    },
+                    "403": {
+                        "description": "The logged in user is not authorized to access this resource"
+                    },
+                    "404": {
+                        "description": "The specified resource does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "Delete an agency by id. Publish to rabbit mq an event AGENCY_DELETED",
+                "operationId": "deleteByIdUsingDELETE",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "agency-id",
+                        "in": "path",
+                        "description": "agency-id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "the agency has been successfully deleted"
+                    }
+                }
+            }
+        },
+        "/agency/agencies/{agency-id}/cics": {
+            "get": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "Get CI/CS for an agency by id",
+                "operationId": "getCicsByIdUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "agency-id",
+                        "in": "path",
+                        "description": "agency-id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the CI/CS for the agency found by id",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CicsAgencyResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "The user is not logged in"
+                    },
+                    "403": {
+                        "description": "The logged in user is not authorized to access this resource"
+                    },
+                    "404": {
+                        "description": "The specified resource does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/agency/agencies/{agency-id}/contacts": {
+            "get": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "Get the contacts for an agency by id",
+                "operationId": "getEcommerceContactsUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "agency-id",
+                        "in": "path",
+                        "description": "agency-id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "poste",
+                        "in": "query",
+                        "description": "poste",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "ADV",
+                            "CDV",
+                            "CDVS",
+                            "DA",
+                            "RDA",
+                            "RDANT",
+                            "RDM",
+                            "UNKNOWN"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the contacts to send email",
+                        "schema": {
+                            "$ref": "#/definitions/GetContactResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "The user is not logged in"
+                    },
+                    "403": {
+                        "description": "The logged in user is not authorized to access this resource"
+                    },
+                    "404": {
+                        "description": "The specified resource does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/agency/agencies/{agency-id}/distanceFrom": {
+            "get": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "get the agency with its branches and computing the distance between the requested address and every agency / branch. The list is sorted by distance",
+                "operationId": "getAgencyWithBranchesUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "addressLine1",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "addressLine2",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "addressLine3",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "agency-id",
+                        "in": "path",
+                        "description": "agency-id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "postalCode",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AgencyInfoResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "The user is not logged in"
+                    },
+                    "403": {
+                        "description": "The logged in user is not authorized to access this resource"
+                    },
+                    "404": {
+                        "description": "The specified resource does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/agency/agencies/{agency-id}/links": {
+            "get": {
+                "tags": [
+                    "Agency"
+                ],
+                "summary": "get the agency with its branches",
+                "operationId": "getAgencyWithBranchesUsingGET_1",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "agency-id",
+                        "in": "path",
+                        "description": "agency-id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AgencyInfoResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "The user is not logged in"
+                    },
+                    "403": {
+                        "description": "The logged in user is not authorized to access this resource"
+                    },
+                    "404": {
+                        "description": "The specified resource does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AddressResponse": {
+            "type": "object",
+            "required": [
+                "city",
+                "country",
+                "line1",
+                "postalCode"
+            ],
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "line1": {
+                    "type": "string"
+                },
+                "line2": {
+                    "type": "string"
+                },
+                "line3": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                }
+            },
+            "title": "AddressResponse"
+        },
+        "AgencyInfoResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "the agency address",
+                    "$ref": "#/definitions/AddressResponse"
+                },
+                "agencyId": {
+                    "type": "string",
+                    "example": 142,
+                    "description": "the agency id"
+                },
+                "agencyName": {
+                    "type": "string",
+                    "example": "Dijon Saint-Apollinaire",
+                    "description": "the agency name"
+                },
+                "agencyType": {
+                    "type": "string",
+                    "example": "BRANCH",
+                    "description": "the agency type (AGENCY or BRANCH)",
+                    "enum": [
+                        "AGENCY",
+                        "BRANCH"
+                    ]
+                },
+                "distance": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 172.90234,
+                    "description": "if the coordinates are known, the distance between this agency and the requested address"
+                },
+                "distributionNetwork": {
+                    "type": "string",
+                    "example": "PROLIANS",
+                    "description": "the distribution network"
+                },
+                "enableExpressMode": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "true if Click&Collect is enabled"
+                },
+                "enableOnlinePayment": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "true if online payment is enabled"
+                },
+                "enableProvision": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "true if MAD is enabled"
+                },
+                "parentAgencyId": {
+                    "type": "string",
+                    "example": 343,
+                    "description": "if a branch, the id of the main agency, otherwise null"
+                },
+                "showAgencyToClient": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "true if need to show agency to client (unused)"
+                },
+                "subsidiaryId": {
+                    "type": "string",
+                    "example": "OM",
+                    "description": "the subsidiary id"
+                },
+                "subsidiaryName": {
+                    "type": "string",
+                    "example": "SOMAIR GERVAT",
+                    "description": "the subsidiary name"
+                },
+                "telephoneNumber": {
+                    "type": "string",
+                    "example": "+33479105268",
+                    "description": "the telephone number (format may vary)"
+                }
+            },
+            "title": "AgencyInfoResponse"
+        },
+        "AgencyResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/AddressResponse"
+                },
+                "agencyId": {
+                    "type": "string"
+                },
+                "agencyName": {
+                    "type": "string"
+                },
+                "agencyPlan": {
+                    "type": "string"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "certifications": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "communication": {
+                    "$ref": "#/definitions/Communication"
+                },
+                "defaultClientIdForPriceWS": {
+                    "type": "string"
+                },
+                "detailedOpeningHours": {
+                    "$ref": "#/definitions/DetailledHours"
+                },
+                "distanceToLocation": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "distributionNetwork": {
+                    "type": "string"
+                },
+                "distributionNetworkCode": {
+                    "type": "string"
+                },
+                "docContactEmail": {
+                    "type": "string"
+                },
+                "enableExpressMode": {
+                    "type": "boolean"
+                },
+                "enableOnlinePayment": {
+                    "type": "boolean"
+                },
+                "enableProvision": {
+                    "type": "boolean"
+                },
+                "exceptionalHours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExceptionalHours"
+                    }
+                },
+                "faxNumber": {
+                    "type": "string"
+                },
+                "fullDescription": {
+                    "type": "string"
+                },
+                "gmbLink": {
+                    "type": "string"
+                },
+                "homeTerminal": {
+                    "type": "string"
+                },
+                "location": {
+                    "$ref": "#/definitions/LocationResponse"
+                },
+                "logo": {
+                    "type": "string"
+                },
+                "managerWord": {
+                    "type": "string"
+                },
+                "nationalAgencyIdentificationNumber": {
+                    "type": "string"
+                },
+                "nationalSubsidiaryIdentificationNumber": {
+                    "type": "string"
+                },
+                "openPublic": {
+                    "type": "string"
+                },
+                "openingHourIntervals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OpenHoursIntervals"
+                    }
+                },
+                "openingHours": {
+                    "type": "string"
+                },
+                "parentAgencyId": {
+                    "type": "string"
+                },
+                "parentNationalAgencyIdentificationNumber": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "primaryContactEmail": {
+                    "type": "string"
+                },
+                "primaryContactEmailDCClic": {
+                    "type": "string"
+                },
+                "prosAgency": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "shortDescription": {
+                    "type": "string"
+                },
+                "showAgencyToClient": {
+                    "type": "boolean"
+                },
+                "specificActivities": {
+                    "type": "string"
+                },
+                "specificPlace": {
+                    "type": "string"
+                },
+                "storeLocatorLink": {
+                    "type": "string"
+                },
+                "subsidiaryId": {
+                    "type": "string"
+                },
+                "subsidiaryName": {
+                    "type": "string"
+                },
+                "telephoneNumber": {
+                    "type": "string"
+                },
+                "useWebserviceForOrders": {
+                    "type": "boolean"
+                }
+            },
+            "title": "AgencyResponse"
+        },
+        "CicsAgencyResponse": {
+            "type": "object",
+            "properties": {
+                "agencyRattachement": {
+                    "type": "string"
+                },
+                "codePoste": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "idMdm": {
+                    "type": "string"
+                },
+                "nom": {
+                    "type": "string"
+                },
+                "poste": {
+                    "type": "string",
+                    "enum": [
+                        "ADV",
+                        "CDV",
+                        "CDVS",
+                        "DA",
+                        "RDA",
+                        "RDANT",
+                        "RDM",
+                        "UNKNOWN"
+                    ]
+                },
+                "prenom": {
+                    "type": "string"
+                },
+                "telephone": {
+                    "type": "string"
+                }
+            },
+            "title": "CicsAgencyResponse"
+        },
+        "Communication": {
+            "type": "object",
+            "properties": {
+                "addressExtra": {
+                    "type": "string"
+                },
+                "bpLocalisation": {
+                    "type": "string"
+                },
+                "cedex": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "pathName": {
+                    "type": "string"
+                },
+                "pathNumber": {
+                    "type": "string"
+                },
+                "pathType": {
+                    "type": "string"
+                }
+            },
+            "title": "Communication"
+        },
+        "DetailledHours": {
+            "type": "object",
+            "properties": {
+                "fridayAmBegin": {
+                    "type": "string"
+                },
+                "fridayAmEnd": {
+                    "type": "string"
+                },
+                "fridayPmBegin": {
+                    "type": "string"
+                },
+                "fridayPmEnd": {
+                    "type": "string"
+                },
+                "mondayAmBegin": {
+                    "type": "string"
+                },
+                "mondayAmEnd": {
+                    "type": "string"
+                },
+                "mondayPmBegin": {
+                    "type": "string"
+                },
+                "mondayPmEnd": {
+                    "type": "string"
+                },
+                "saturdayAmBegin": {
+                    "type": "string"
+                },
+                "saturdayAmEnd": {
+                    "type": "string"
+                },
+                "saturdayPmBegin": {
+                    "type": "string"
+                },
+                "saturdayPmEnd": {
+                    "type": "string"
+                },
+                "thursdayAmBegin": {
+                    "type": "string"
+                },
+                "thursdayAmEnd": {
+                    "type": "string"
+                },
+                "thursdayPmBegin": {
+                    "type": "string"
+                },
+                "thursdayPmEnd": {
+                    "type": "string"
+                },
+                "tuesdayAmBegin": {
+                    "type": "string"
+                },
+                "tuesdayAmEnd": {
+                    "type": "string"
+                },
+                "tuesdayPmBegin": {
+                    "type": "string"
+                },
+                "tuesdayPmEnd": {
+                    "type": "string"
+                },
+                "wednesdayAmBegin": {
+                    "type": "string"
+                },
+                "wednesdayAmEnd": {
+                    "type": "string"
+                },
+                "wednesdayPmBegin": {
+                    "type": "string"
+                },
+                "wednesdayPmEnd": {
+                    "type": "string"
+                }
+            },
+            "title": "DetailledHours"
+        },
+        "ExceptionalHours": {
+            "type": "object",
+            "properties": {
+                "closed": {
+                    "type": "boolean"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "hours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/HourInterval"
+                    }
+                }
+            },
+            "title": "ExceptionalHours"
+        },
+        "GetContactResponse": {
+            "type": "object",
+            "properties": {
+                "cics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CicsAgencyResponse"
+                    }
+                },
+                "primaryContactEmail": {
+                    "type": "string"
+                }
+            },
+            "title": "GetContactResponse"
+        },
+        "HourInterval": {
+            "type": "object",
+            "properties": {
+                "begin": {
+                    "$ref": "#/definitions/LocalTime"
+                },
+                "end": {
+                    "$ref": "#/definitions/LocalTime"
+                }
+            },
+            "title": "HourInterval"
+        },
+        "Interval": {
+            "type": "object",
+            "properties": {
+                "begin": {
+                    "type": "string"
+                },
+                "end": {
+                    "type": "string"
+                }
+            },
+            "title": "Interval"
+        },
+        "LocalTime": {
+            "type": "object",
+            "properties": {
+                "hour": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "minute": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "nano": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "second": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "LocalTime"
+        },
+        "LocationResponse": {
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "LocationResponse"
+        },
+        "OpenHoursIntervals": {
+            "type": "object",
+            "properties": {
+                "day": {
+                    "type": "string"
+                },
+                "dayOfWeek": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "intervals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Interval"
+                    }
+                }
+            },
+            "title": "OpenHoursIntervals"
+        },
+        "Page«AgencyResponse»": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AgencyResponse"
+                    }
+                },
+                "empty": {
+                    "type": "boolean"
+                },
+                "first": {
+                    "type": "boolean"
+                },
+                "last": {
+                    "type": "boolean"
+                },
+                "number": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "numberOfElements": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "size": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "sort": {
+                    "$ref": "#/definitions/Sort"
+                },
+                "totalElements": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "totalPages": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "Page«AgencyResponse»"
+        },
+        "Sort": {
+            "type": "object",
+            "properties": {
+                "empty": {
+                    "type": "boolean"
+                },
+                "sorted": {
+                    "type": "boolean"
+                },
+                "unsorted": {
+                    "type": "boolean"
+                }
+            },
+            "title": "Sort"
+        }
+    }
+}

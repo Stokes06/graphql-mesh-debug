@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  //"files": ["mesh.config.ts", "ms-agen"],
+  "exclude": ["node_modules"],
+  "baseUrl": "./"
+}

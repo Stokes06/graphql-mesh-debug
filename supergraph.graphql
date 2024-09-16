@@ -1,0 +1,5217 @@
+
+schema
+  @link(url: "https://specs.apollo.dev/link/v1.0")
+  @link(url: "https://specs.apollo.dev/join/v0.3", for: EXECUTION)
+  
+  
+  
+  
+  
+  @link(
+  url: "https://the-guild.dev/graphql/mesh/spec/v1.0"
+  import: ["@enum", "@typescript", "@example", "@httpOperation", "@transport", "@hoist", "@source", "@extraTypeDirective", "@extraSchemaDefinitionDirective", "@extraEnumValueDirective"]
+)
+{
+  query: Query
+  
+  
+}
+
+
+  directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+  directive @join__field(
+    graph: join__Graph
+    requires: join__FieldSet
+    provides: join__FieldSet
+    type: String
+    external: Boolean
+    override: String
+    usedOverridden: Boolean
+  ) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+  directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+  directive @join__implements(
+    graph: join__Graph!
+    interface: String!
+  ) repeatable on OBJECT | INTERFACE
+
+  directive @join__type(
+    graph: join__Graph!
+    key: join__FieldSet
+    extension: Boolean! = false
+    resolvable: Boolean! = true
+    isInterfaceObject: Boolean! = false
+  ) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+  directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+
+  scalar join__FieldSet
+
+
+  directive @link(
+    url: String
+    as: String
+    for: link__Purpose
+    import: [link__Import]
+  ) repeatable on SCHEMA
+
+  scalar link__Import
+
+  enum link__Purpose {
+    """
+    `SECURITY` features provide metadata necessary to securely resolve fields.
+    """
+    SECURITY
+
+    """
+    `EXECUTION` features provide metadata necessary for operation execution.
+    """
+    EXECUTION
+  }
+
+
+
+
+
+
+
+enum join__Graph {
+  WEATHER @join__graph(name: "Weather", url: "https://api.weatherbit.io/v2.0") 
+}
+
+directive @enum(subgraph: String, value: String)  repeatable on ENUM_VALUE
+
+directive @typescript(subgraph: String, type: String)  repeatable on SCALAR | ENUM
+
+directive @example(subgraph: String, value: MyTestWeather_ObjMap)  repeatable on FIELD_DEFINITION | OBJECT | INPUT_OBJECT | ENUM | SCALAR
+
+directive @httpOperation(
+  subgraph: String
+  path: String
+  operationSpecificHeaders: [[String]]
+  httpMethod: MyTestWeather_HTTPMethod
+  isBinary: Boolean
+  requestBaseBody: MyTestWeather_ObjMap
+  queryParamArgMap: MyTestWeather_ObjMap
+  queryStringOptionsByParam: MyTestWeather_ObjMap
+  jsonApiFields: Boolean
+  queryStringOptions: MyTestWeather_ObjMap
+) repeatable on FIELD_DEFINITION
+
+directive @transport(
+  subgraph: String
+  kind: String
+  location: String
+  headers: [[String]]
+  queryStringOptions: MyTestWeather_ObjMap
+  queryParams: [[String]]
+) repeatable on SCHEMA
+
+directive @hoist(subgraph: String, pathConfig: _HoistConfig)  repeatable on FIELD_DEFINITION
+
+directive @source(name: String!, type: String, subgraph: String!)  repeatable on SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @extraTypeDirective(name: String!, directives: _DirectiveExtensions)  repeatable on OBJECT
+
+directive @extraSchemaDefinitionDirective(directives: _DirectiveExtensions)  repeatable on OBJECT
+
+directive @extraEnumValueDirective(name: String!, value: String!, directives: _DirectiveExtensions)  repeatable on OBJECT
+
+"""
+A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar MyTestWeather_URL @source(name: "URL", subgraph: "Weather")  @join__type(graph: WEATHER) 
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar MyTestWeather_JSON @source(name: "JSON", subgraph: "Weather")  @join__type(graph: WEATHER)  @specifiedBy(
+  url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+)
+
+"""
+Represents date values
+"""
+scalar MyTestWeather_Date @source(name: "Date", subgraph: "Weather")  @join__type(graph: WEATHER) 
+
+scalar MyTestWeather_ObjMap @source(name: "ObjMap", subgraph: "Weather")  @join__type(graph: WEATHER) 
+
+scalar _HoistConfig @join__type(graph: WEATHER) 
+
+scalar _DirectiveExtensions @join__type(graph: WEATHER) 
+
+type Query @source(name: "Query", subgraph: "Weather")  @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_cities_units"
+  directives: {source: [{name: "queryInput_current_by_cities_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_t_const"
+  directives: {typescript: [{subgraph: "Weather", type: "\"t\""}], example: [{subgraph: "Weather", value: "t"}], source: [{name: "t_const", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_cities_lang"
+  directives: {source: [{name: "queryInput_current_by_cities_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_minutely_const"
+  directives: {typescript: [{subgraph: "Weather", type: "\"minutely\""}], example: [{subgraph: "Weather", value: "minutely"}], source: [{name: "minutely_const", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_city_by_country_units"
+  directives: {source: [{name: "queryInput_current_by_city_by_country_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_city_by_country_lang"
+  directives: {source: [{name: "queryInput_current_by_city_by_country_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_city_id_units"
+  directives: {source: [{name: "queryInput_current_by_city_id_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_city_id_lang"
+  directives: {source: [{name: "queryInput_current_by_city_id_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_current_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_lat_by_lon_lang"
+  directives: {source: [{name: "queryInput_current_by_lat_by_lon_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_points_units"
+  directives: {source: [{name: "queryInput_current_by_points_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_points_lang"
+  directives: {source: [{name: "queryInput_current_by_points_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_postal_code_units"
+  directives: {source: [{name: "queryInput_current_by_postal_code_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_postal_code_lang"
+  directives: {source: [{name: "queryInput_current_by_postal_code_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_station_units"
+  directives: {source: [{name: "queryInput_current_by_station_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_station_lang"
+  directives: {source: [{name: "queryInput_current_by_station_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_stations_units"
+  directives: {source: [{name: "queryInput_current_by_stations_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_current_by_stations_lang"
+  directives: {source: [{name: "queryInput_current_by_stations_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_city_by_country_units"
+  directives: {source: [{name: "queryInput_forecast_daily_by_city_by_country_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_city_by_country_lang"
+  directives: {source: [{name: "queryInput_forecast_daily_by_city_by_country_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_city_id_units"
+  directives: {source: [{name: "queryInput_forecast_daily_by_city_id_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_city_id_lang"
+  directives: {source: [{name: "queryInput_forecast_daily_by_city_id_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_forecast_daily_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_lang"
+  directives: {source: [{name: "queryInput_forecast_daily_by_lat_by_lon_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_postal_code_units"
+  directives: {source: [{name: "queryInput_forecast_daily_by_postal_code_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_postal_code_lang"
+  directives: {source: [{name: "queryInput_forecast_daily_by_postal_code_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_energy_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_forecast_energy_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_energy_by_lat_by_lon_tp"
+  directives: {source: [{name: "queryInput_forecast_energy_by_lat_by_lon_tp", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_city_by_country_units"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_city_by_country_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_city_by_country_lang"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_city_by_country_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_city_id_units"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_city_id_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_city_id_lang"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_city_id_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_lang"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_lat_by_lon_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_postal_code_units"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_postal_code_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_postal_code_lang"
+  directives: {source: [{name: "queryInput_forecast_hourly_by_postal_code_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_city_by_country_units"
+  directives: {source: [{name: "queryInput_history_daily_by_city_by_country_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_city_by_country_lang"
+  directives: {source: [{name: "queryInput_history_daily_by_city_by_country_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_city_id_units"
+  directives: {source: [{name: "queryInput_history_daily_by_city_id_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_city_id_lang"
+  directives: {source: [{name: "queryInput_history_daily_by_city_id_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_history_daily_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_lat_by_lon_lang"
+  directives: {source: [{name: "queryInput_history_daily_by_lat_by_lon_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_postal_code_units"
+  directives: {source: [{name: "queryInput_history_daily_by_postal_code_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_postal_code_lang"
+  directives: {source: [{name: "queryInput_history_daily_by_postal_code_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_station_units"
+  directives: {source: [{name: "queryInput_history_daily_by_station_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_station_lang"
+  directives: {source: [{name: "queryInput_history_daily_by_station_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_energy_by_lat_by_lon_tp"
+  directives: {source: [{name: "queryInput_history_energy_by_lat_by_lon_tp", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_energy_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_history_energy_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_by_country_units"
+  directives: {source: [{name: "queryInput_history_hourly_by_city_by_country_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_by_country_lang"
+  directives: {source: [{name: "queryInput_history_hourly_by_city_by_country_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_by_country_tz"
+  directives: {source: [{name: "queryInput_history_hourly_by_city_by_country_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_id_units"
+  directives: {source: [{name: "queryInput_history_hourly_by_city_id_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_id_lang"
+  directives: {source: [{name: "queryInput_history_hourly_by_city_id_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_id_tz"
+  directives: {source: [{name: "queryInput_history_hourly_by_city_id_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_history_hourly_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_lat_by_lon_lang"
+  directives: {source: [{name: "queryInput_history_hourly_by_lat_by_lon_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_lat_by_lon_tz"
+  directives: {source: [{name: "queryInput_history_hourly_by_lat_by_lon_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_postal_code_units"
+  directives: {source: [{name: "queryInput_history_hourly_by_postal_code_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_postal_code_lang"
+  directives: {source: [{name: "queryInput_history_hourly_by_postal_code_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_postal_code_tz"
+  directives: {source: [{name: "queryInput_history_hourly_by_postal_code_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_station_units"
+  directives: {source: [{name: "queryInput_history_hourly_by_station_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_station_lang"
+  directives: {source: [{name: "queryInput_history_hourly_by_station_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_station_tz"
+  directives: {source: [{name: "queryInput_history_hourly_by_station_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_by_country_units"
+  directives: {source: [{name: "queryInput_history_subhourly_by_city_by_country_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_by_country_lang"
+  directives: {source: [{name: "queryInput_history_subhourly_by_city_by_country_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_by_country_tz"
+  directives: {source: [{name: "queryInput_history_subhourly_by_city_by_country_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_id_units"
+  directives: {source: [{name: "queryInput_history_subhourly_by_city_id_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_id_lang"
+  directives: {source: [{name: "queryInput_history_subhourly_by_city_id_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_id_tz"
+  directives: {source: [{name: "queryInput_history_subhourly_by_city_id_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_units"
+  directives: {source: [{name: "queryInput_history_subhourly_by_lat_by_lon_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_lang"
+  directives: {source: [{name: "queryInput_history_subhourly_by_lat_by_lon_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_tz"
+  directives: {source: [{name: "queryInput_history_subhourly_by_lat_by_lon_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_postal_code_units"
+  directives: {source: [{name: "queryInput_history_subhourly_by_postal_code_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_postal_code_lang"
+  directives: {source: [{name: "queryInput_history_subhourly_by_postal_code_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_postal_code_tz"
+  directives: {source: [{name: "queryInput_history_subhourly_by_postal_code_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_station_units"
+  directives: {source: [{name: "queryInput_history_subhourly_by_station_units", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_station_lang"
+  directives: {source: [{name: "queryInput_history_subhourly_by_station_lang", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_station_tz"
+  directives: {source: [{name: "queryInput_history_subhourly_by_station_tz", subgraph: "Weather"}]}
+) @extraTypeDirective(
+  name: "MyTestWeather_HTTPMethod"
+  directives: {source: [{name: "HTTPMethod", subgraph: "Weather"}]}
+) @extraSchemaDefinitionDirective(
+  directives: {transport: [{subgraph: "Weather", kind: "rest", location: "https://api.weatherbit.io/v2.0", headers: [["X-RapidAPI-Key", "b61520ea661d441a93f4c0e05947d100"]], queryParams: [["key", "b61520ea661d441a93f4c0e05947d100"]]}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_t_const"
+  value: "t"
+  directives: {enum: [{subgraph: "Weather", value: "\"t\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_cities_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_minutely_const"
+  value: "minutely"
+  directives: {enum: [{subgraph: "Weather", value: "\"minutely\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_city_by_country_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_city_id_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_lat_by_lon_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_points_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_postal_code_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_station_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_current_by_stations_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_city_by_country_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_city_id_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_daily_by_postal_code_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_city_by_country_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_city_id_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_forecast_hourly_by_postal_code_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_city_by_country_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_city_id_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_lat_by_lon_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_postal_code_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_daily_by_station_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_by_country_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_city_id_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_lat_by_lon_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_postal_code_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_hourly_by_station_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_by_country_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_city_id_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_postal_code_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @extraEnumValueDirective(
+  name: "MyTestWeather_queryInput_history_subhourly_by_station_lang"
+  value: "zh_tw"
+  directives: {enum: [{subgraph: "Weather", value: "\"zh-tw\""}]}
+) @join__type(graph: WEATHER)  {
+  """
+  Returns severe weather alerts issued by meteorological agencies - given a lat, and a lon.
+  """
+  alerts_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Wraps return in jsonp callback - Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_WeatherAlert @httpOperation(
+    subgraph: "Weather"
+    path: "/alerts?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "alerts_by_lat_by_lon", type: "WeatherAlert", subgraph: "Weather") 
+  """
+  Downloads bulk data files - OPTIONS: ( current.csv.gz, forecast_hourly.csv.gz, forecast_daily.csv.gz). Units are Metric (Celcius, m/s, etc).
+  """
+  bulk_files_by_file(
+    """
+    Filename (ie. current.csv.gz)
+    """
+    file: String!
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_JSON @httpOperation(
+    subgraph: "Weather"
+    path: "/bulk/files/{args.file}"
+    httpMethod: GET
+    queryParamArgMap: "{\"key\":\"key\"}"
+  ) @source(name: "bulk_files_by_file", type: "JSON", subgraph: "Weather") 
+  """
+  Returns current air quality conditions.
+  """
+  current_airquality_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current/airquality?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "current_airquality_by_city_by_country"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns current air quality conditions.
+  """
+  current_airquality_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: Int!
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current/airquality?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "current_airquality_by_city_id"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns current air quality conditions.
+  """
+  current_airquality_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current/airquality?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "current_airquality_by_lat_by_lon"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns current air quality conditions.
+  """
+  current_airquality_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: Int!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current/airquality?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "current_airquality_by_postal_code"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns a group of Current Observations - Given a list of City IDs. 
+  """
+  current_by_cities(
+    """
+    Comma separated list of City ID's. Example: 4487042, 4494942, 4504871
+    """
+    cities: String!
+    units: MyTestWeather_queryInput_current_by_cities_units @source(
+      name: "units"
+      type: "queryInput_current_by_cities_units"
+      subgraph: "Weather"
+    )
+    marine: MyTestWeather_t_const @source(name: "marine", type: "t_const", subgraph: "Weather") 
+    lang: MyTestWeather_queryInput_current_by_cities_lang @source(name: "lang", type: "queryInput_current_by_cities_lang", subgraph: "Weather") 
+    """
+    Wraps return in jsonp callback - Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?cities={args.cities}"
+    httpMethod: GET
+    queryParamArgMap: "{\"units\":\"units\",\"marine\":\"marine\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_cities", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns a Current Observation - Given a city in the format of City,ST or City. The state, and country parameters can be provided to make the search more accurate.
+  """
+  current_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    include: MyTestWeather_minutely_const @source(name: "include", type: "minutely_const", subgraph: "Weather") 
+    """
+    Full name of state.
+    """
+    state: String
+    marine: MyTestWeather_t_const @source(name: "marine", type: "t_const", subgraph: "Weather") 
+    units: MyTestWeather_queryInput_current_by_city_by_country_units @source(
+      name: "units"
+      type: "queryInput_current_by_city_by_country_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_current_by_city_by_country_lang @source(
+      name: "lang"
+      type: "queryInput_current_by_city_by_country_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback - Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"include\":\"include\",\"state\":\"state\",\"marine\":\"marine\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "current_by_city_by_country"
+    type: "CurrentObsGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns current weather observation - Given a City ID. 
+  """
+  current_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: String!
+    units: MyTestWeather_queryInput_current_by_city_id_units @source(
+      name: "units"
+      type: "queryInput_current_by_city_id_units"
+      subgraph: "Weather"
+    )
+    include: MyTestWeather_minutely_const @source(name: "include", type: "minutely_const", subgraph: "Weather") 
+    marine: MyTestWeather_t_const @source(name: "marine", type: "t_const", subgraph: "Weather") 
+    lang: MyTestWeather_queryInput_current_by_city_id_lang @source(name: "lang", type: "queryInput_current_by_city_id_lang", subgraph: "Weather") 
+    """
+    Wraps return in jsonp callback - Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"units\":\"units\",\"include\":\"include\",\"marine\":\"marine\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_city_id", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns a Current Observation - given a lat, and a lon.
+  """
+  current_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    include: MyTestWeather_minutely_const @source(name: "include", type: "minutely_const", subgraph: "Weather") 
+    marine: MyTestWeather_t_const @source(name: "marine", type: "t_const", subgraph: "Weather") 
+    units: MyTestWeather_queryInput_current_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_current_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_current_by_lat_by_lon_lang @source(
+      name: "lang"
+      type: "queryInput_current_by_lat_by_lon_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback - Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"include\":\"include\",\"marine\":\"marine\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_lat_by_lon", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns a group of Current Observations - Given a list of points (lat1, lon1), (lat2, lon2), (latN, lonN), ...
+  """
+  current_by_points(
+    """
+    Comma separated list of points. Example: (35.5, -75.5),(45, 65),(45.12, -130.5)
+    """
+    points: String!
+    units: MyTestWeather_queryInput_current_by_points_units @source(
+      name: "units"
+      type: "queryInput_current_by_points_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_current_by_points_lang @source(name: "lang", type: "queryInput_current_by_points_lang", subgraph: "Weather") 
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?points={args.points}"
+    httpMethod: GET
+    queryParamArgMap: "{\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_points", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns current weather observation - Given a Postal Code. 
+  """
+  current_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    include: MyTestWeather_minutely_const @source(name: "include", type: "minutely_const", subgraph: "Weather") 
+    marine: MyTestWeather_t_const @source(name: "marine", type: "t_const", subgraph: "Weather") 
+    units: MyTestWeather_queryInput_current_by_postal_code_units @source(
+      name: "units"
+      type: "queryInput_current_by_postal_code_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_current_by_postal_code_lang @source(
+      name: "lang"
+      type: "queryInput_current_by_postal_code_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback - Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"include\":\"include\",\"marine\":\"marine\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_postal_code", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns a Current Observation - Given a station ID.
+  """
+  current_by_station(
+    """
+    Station Call ID.
+    """
+    station: String!
+    include: MyTestWeather_minutely_const @source(name: "include", type: "minutely_const", subgraph: "Weather") 
+    units: MyTestWeather_queryInput_current_by_station_units @source(
+      name: "units"
+      type: "queryInput_current_by_station_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_current_by_station_lang @source(name: "lang", type: "queryInput_current_by_station_lang", subgraph: "Weather") 
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?station={args.station}"
+    httpMethod: GET
+    queryParamArgMap: "{\"include\":\"include\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_station", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns a group of Current Observations - Given a list of Station Call IDs. 
+  """
+  current_by_stations(
+    """
+    Comma separated list of Station Call ID's. Example: KRDU,KBFI,KVNY
+    """
+    stations: String!
+    units: MyTestWeather_queryInput_current_by_stations_units @source(
+      name: "units"
+      type: "queryInput_current_by_stations_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_current_by_stations_lang @source(
+      name: "lang"
+      type: "queryInput_current_by_stations_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_CurrentObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/current?stations={args.stations}"
+    httpMethod: GET
+    queryParamArgMap: "{\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "current_by_stations", type: "CurrentObsGroup", subgraph: "Weather") 
+  """
+  Returns 72 hour (hourly) Air Quality forecast, where each point represents a one hour period.
+  """
+  forecast_airquality_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/airquality?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"callback\":\"callback\",\"hours\":\"hours\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_airquality_by_city_by_country"
+    type: "AQHourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns 72 hour (hourly) Air Quality forecast, where each point represents a one hour period.
+  """
+  forecast_airquality_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: Int!
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/airquality?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"hours\":\"hours\",\"key\":\"key\"}"
+  ) @source(name: "forecast_airquality_by_city_id", type: "AQHourly", subgraph: "Weather") 
+  """
+  Returns 72 hour (hourly) Air Quality forecast, where each point represents a one hour period.
+  """
+  forecast_airquality_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+  ): MyTestWeather_AQHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/airquality?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"key\":\"key\",\"hours\":\"hours\"}"
+  ) @source(
+    name: "forecast_airquality_by_lat_by_lon"
+    type: "AQHourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns 72 hour (hourly) Air Quality forecast, where each point represents a one hour period.
+  """
+  forecast_airquality_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: Int!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/airquality?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"callback\":\"callback\",\"hours\":\"hours\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_airquality_by_postal_code"
+    type: "AQHourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns a daily forecast, where each point represents one day (24hr) period. Every point has a datetime string in the format "YYYY-MM-DD". One day begins at 00:00 UTC, and ends at 23:59 UTC. Accepts a city in the format of City,ST or City. The state, and country parameters can be provided to make the search more accurate.
+  
+  """
+  forecast_daily_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Number of days to return. Default 16.
+    """
+    days: Float
+    units: MyTestWeather_queryInput_forecast_daily_by_city_by_country_units @source(
+      name: "units"
+      type: "queryInput_forecast_daily_by_city_by_country_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_daily_by_city_by_country_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_daily_by_city_by_country_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastDay @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/daily?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"days\":\"days\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_daily_by_city_by_country"
+    type: "ForecastDay"
+    subgraph: "Weather"
+  )
+  """
+  Returns a daily forecast, where each point represents one day (24hr) period. Every point has a datetime string in the format "YYYY-MM-DD". One day begins at 00:00 UTC, and ends at 23:59 UTC.
+  
+  """
+  forecast_daily_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: Int!
+    """
+    Number of days to return. Default 16.
+    """
+    days: Float
+    units: MyTestWeather_queryInput_forecast_daily_by_city_id_units @source(
+      name: "units"
+      type: "queryInput_forecast_daily_by_city_id_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_daily_by_city_id_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_daily_by_city_id_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastDay @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/daily?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"days\":\"days\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "forecast_daily_by_city_id", type: "ForecastDay", subgraph: "Weather") 
+  """
+  Returns a daily forecast, where each point represents one day (24hr) period. Every point has a datetime string in the format "YYYY-MM-DD". One day begins at 00:00 UTC, and ends at 23:59 UTC. 
+  
+  """
+  forecast_daily_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Number of days to return. Default 16.
+    """
+    days: Float
+    units: MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_forecast_daily_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_daily_by_lat_by_lon_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastDay @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/daily?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"days\":\"days\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_daily_by_lat_by_lon"
+    type: "ForecastDay"
+    subgraph: "Weather"
+  )
+  """
+  Returns a daily forecast, where each point represents one day (24hr) period. Every point has a datetime string in the format "YYYY-MM-DD". One day begins at 00:00 UTC, and ends at 23:59 UTC.
+  
+  """
+  forecast_daily_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: Int!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Number of days to return. Default 16.
+    """
+    days: Float
+    units: MyTestWeather_queryInput_forecast_daily_by_postal_code_units @source(
+      name: "units"
+      type: "queryInput_forecast_daily_by_postal_code_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_daily_by_postal_code_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_daily_by_postal_code_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastDay @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/daily?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"days\":\"days\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_daily_by_postal_code"
+    type: "ForecastDay"
+    subgraph: "Weather"
+  )
+  """
+  Retrieve an 8 day forecast relevant to te Energy Sector (degree days, solar radiation, precipitation, wind).
+  """
+  forecast_energy_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Temperature threshold to use to calculate degree days (default 18 C)
+    """
+    threshold: Float
+    units: MyTestWeather_queryInput_forecast_energy_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_forecast_energy_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    tp: MyTestWeather_queryInput_forecast_energy_by_lat_by_lon_tp @source(
+      name: "tp"
+      type: "queryInput_forecast_energy_by_lat_by_lon_tp"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_EnergyObsGroupForecast @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/energy?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"threshold\":\"threshold\",\"units\":\"units\",\"tp\":\"tp\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_energy_by_lat_by_lon"
+    type: "EnergyObsGroupForecast"
+    subgraph: "Weather"
+  )
+  """
+   Returns an hourly forecast, where each point represents a one hour   period. Every point has a datetime string in the format "YYYY-MM-DD:HH". Time is UTC. Accepts a city in the format of City,ST or City. The state, and country parameters can be provided to make the search more accurate.
+  
+  """
+  forecast_hourly_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    units: MyTestWeather_queryInput_forecast_hourly_by_city_by_country_units @source(
+      name: "units"
+      type: "queryInput_forecast_hourly_by_city_by_country_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_hourly_by_city_by_country_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_hourly_by_city_by_country_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/hourly?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"hours\":\"hours\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_hourly_by_city_by_country"
+    type: "ForecastHourly"
+    subgraph: "Weather"
+  )
+  """
+   Returns an hourly forecast, where each point represents a one hour   period. Every point has a datetime string in the format "YYYY-MM-DD:HH". Time is UTC. 
+  
+  """
+  forecast_hourly_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: Int!
+    units: MyTestWeather_queryInput_forecast_hourly_by_city_id_units @source(
+      name: "units"
+      type: "queryInput_forecast_hourly_by_city_id_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_hourly_by_city_id_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_hourly_by_city_id_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/hourly?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"hours\":\"hours\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_hourly_by_city_id"
+    type: "ForecastHourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns an hourly forecast, where each point represents a one hour period. Every point has a datetime string in the format "YYYY-MM-DD:HH". Time is UTC. 
+  
+  """
+  forecast_hourly_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    units: MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_forecast_hourly_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_hourly_by_lat_by_lon_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+  ): MyTestWeather_ForecastHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/hourly?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\",\"hours\":\"hours\"}"
+  ) @source(
+    name: "forecast_hourly_by_lat_by_lon"
+    type: "ForecastHourly"
+    subgraph: "Weather"
+  )
+  """
+   Returns an hourly forecast, where each point represents a one hour   period. Every point has a datetime string in the format "YYYY-MM-DD:HH". Time is UTC. 
+  
+  """
+  forecast_hourly_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: Int!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    units: MyTestWeather_queryInput_forecast_hourly_by_postal_code_units @source(
+      name: "units"
+      type: "queryInput_forecast_hourly_by_postal_code_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_forecast_hourly_by_postal_code_lang @source(
+      name: "lang"
+      type: "queryInput_forecast_hourly_by_postal_code_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Number of hours to return.
+    """
+    hours: Int
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_ForecastHourly @httpOperation(
+    subgraph: "Weather"
+    path: "/forecast/hourly?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"hours\":\"hours\",\"key\":\"key\"}"
+  ) @source(
+    name: "forecast_hourly_by_postal_code"
+    type: "ForecastHourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns historical air quality conditions.
+  """
+  history_airquality_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/history/airquality?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_airquality_by_city_by_country"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns historical air quality conditions.
+  """
+  history_airquality_by_city_id(
+    """
+    City ID.
+    """
+    city_id: Float!
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/history/airquality?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_airquality_by_city_id"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns historical air quality conditions.
+  """
+  history_airquality_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/history/airquality?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_airquality_by_lat_by_lon"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns historical air quality conditions.
+  """
+  history_airquality_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: Int!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Wraps return in jsonp callback. Example - callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_AQCurrentGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/history/airquality?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_airquality_by_postal_code"
+    type: "AQCurrentGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a city in the format of City,ST or City. The state, and country parameters can be provided to make the search more accurate. **(LIMIT 1 year per request)**
+  """
+  history_daily_by_city_by_country(
+    """
+    City search.. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_daily_by_city_by_country_units @source(
+      name: "units"
+      type: "queryInput_history_daily_by_city_by_country_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_daily_by_city_by_country_lang @source(
+      name: "lang"
+      type: "queryInput_history_daily_by_city_by_country_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistoryDay @httpOperation(
+    subgraph: "Weather"
+    path: "/history/daily?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_daily_by_city_by_country"
+    type: "HistoryDay"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a City ID. **(LIMIT 1 year per request)**
+  """
+  history_daily_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: String!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_daily_by_city_id_units @source(
+      name: "units"
+      type: "queryInput_history_daily_by_city_id_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_daily_by_city_id_lang @source(
+      name: "lang"
+      type: "queryInput_history_daily_by_city_id_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistoryDay @httpOperation(
+    subgraph: "Weather"
+    path: "/history/daily?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_daily_by_city_id", type: "HistoryDay", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a lat, and lon. **(LIMIT 1 year per request)**
+  """
+  history_daily_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_daily_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_history_daily_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_daily_by_lat_by_lon_lang @source(
+      name: "lang"
+      type: "queryInput_history_daily_by_lat_by_lon_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistoryDay @httpOperation(
+    subgraph: "Weather"
+    path: "/history/daily?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_daily_by_lat_by_lon", type: "HistoryDay", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a Postal Code. **(LIMIT 1 year per request)**
+  """
+  history_daily_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_daily_by_postal_code_units @source(
+      name: "units"
+      type: "queryInput_history_daily_by_postal_code_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_daily_by_postal_code_lang @source(
+      name: "lang"
+      type: "queryInput_history_daily_by_postal_code_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistoryDay @httpOperation(
+    subgraph: "Weather"
+    path: "/history/daily?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_daily_by_postal_code", type: "HistoryDay", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a station ID. **(LIMIT 1 year per request)**
+  """
+  history_daily_by_station(
+    """
+    Station ID.
+    """
+    station: String!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_daily_by_station_units @source(
+      name: "units"
+      type: "queryInput_history_daily_by_station_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_daily_by_station_lang @source(
+      name: "lang"
+      type: "queryInput_history_daily_by_station_lang"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistoryDay @httpOperation(
+    subgraph: "Weather"
+    path: "/history/daily?station={args.station}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_daily_by_station", type: "HistoryDay", subgraph: "Weather") 
+  """
+  Returns aggregate energy specific historical weather fields, over a specified time period.
+  """
+  history_energy_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    tp: MyTestWeather_queryInput_history_energy_by_lat_by_lon_tp @source(
+      name: "tp"
+      type: "queryInput_history_energy_by_lat_by_lon_tp"
+      subgraph: "Weather"
+    )
+    """
+    Temperature threshold to use to calculate degree days (default 18 C)
+    """
+    threshold: Float
+    units: MyTestWeather_queryInput_history_energy_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_history_energy_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_EnergyObsGroup @httpOperation(
+    subgraph: "Weather"
+    path: "/history/energy?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"tp\":\"tp\",\"threshold\":\"threshold\",\"units\":\"units\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_energy_by_lat_by_lon"
+    type: "EnergyObsGroup"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a city in the format of City,ST or City. The state, and country parameters can be provided to make the search more accurate. **(LIMIT 31 days per request)**
+  """
+  history_hourly_by_city_by_country(
+    """
+    City search. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_hourly_by_city_by_country_units @source(
+      name: "units"
+      type: "queryInput_history_hourly_by_city_by_country_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_hourly_by_city_by_country_lang @source(
+      name: "lang"
+      type: "queryInput_history_hourly_by_city_by_country_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_hourly_by_city_by_country_tz @source(
+      name: "tz"
+      type: "queryInput_history_hourly_by_city_by_country_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_History @httpOperation(
+    subgraph: "Weather"
+    path: "/history/hourly?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_hourly_by_city_by_country"
+    type: "History"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a City ID. **(LIMIT 31 days per request)**
+  """
+  history_hourly_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: String!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_hourly_by_city_id_units @source(
+      name: "units"
+      type: "queryInput_history_hourly_by_city_id_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_hourly_by_city_id_lang @source(
+      name: "lang"
+      type: "queryInput_history_hourly_by_city_id_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_hourly_by_city_id_tz @source(
+      name: "tz"
+      type: "queryInput_history_hourly_by_city_id_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_History @httpOperation(
+    subgraph: "Weather"
+    path: "/history/hourly?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_hourly_by_city_id", type: "History", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a lat, and lon. **(LIMIT 31 days per request)**
+  """
+  history_hourly_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_hourly_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_history_hourly_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_hourly_by_lat_by_lon_lang @source(
+      name: "lang"
+      type: "queryInput_history_hourly_by_lat_by_lon_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_hourly_by_lat_by_lon_tz @source(
+      name: "tz"
+      type: "queryInput_history_hourly_by_lat_by_lon_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_History @httpOperation(
+    subgraph: "Weather"
+    path: "/history/hourly?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_hourly_by_lat_by_lon", type: "History", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a Postal Code. **(LIMIT 31 days per request)**
+  """
+  history_hourly_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_hourly_by_postal_code_units @source(
+      name: "units"
+      type: "queryInput_history_hourly_by_postal_code_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_hourly_by_postal_code_lang @source(
+      name: "lang"
+      type: "queryInput_history_hourly_by_postal_code_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_hourly_by_postal_code_tz @source(
+      name: "tz"
+      type: "queryInput_history_hourly_by_postal_code_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_History @httpOperation(
+    subgraph: "Weather"
+    path: "/history/hourly?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_hourly_by_postal_code", type: "History", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a station ID. **(LIMIT 31 days per request)**
+  """
+  history_hourly_by_station(
+    """
+    Station ID.
+    """
+    station: String!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_hourly_by_station_units @source(
+      name: "units"
+      type: "queryInput_history_hourly_by_station_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_hourly_by_station_lang @source(
+      name: "lang"
+      type: "queryInput_history_hourly_by_station_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_hourly_by_station_tz @source(
+      name: "tz"
+      type: "queryInput_history_hourly_by_station_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_History @httpOperation(
+    subgraph: "Weather"
+    path: "/history/hourly?station={args.station}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(name: "history_hourly_by_station", type: "History", subgraph: "Weather") 
+  """
+  Returns Historical Observations - Given a city in the format of City,ST or City. The state, and country parameters can be provided to make the search more accurate.
+  """
+  history_subhourly_by_city_by_country(
+    """
+    City search. Example - &city=Raleigh,NC or &city=Berlin,DE or city=Paris&country=FR
+    """
+    city: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String!
+    """
+    Full name of state.
+    """
+    state: String
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_subhourly_by_city_by_country_units @source(
+      name: "units"
+      type: "queryInput_history_subhourly_by_city_by_country_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_subhourly_by_city_by_country_lang @source(
+      name: "lang"
+      type: "queryInput_history_subhourly_by_city_by_country_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_subhourly_by_city_by_country_tz @source(
+      name: "tz"
+      type: "queryInput_history_subhourly_by_city_by_country_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_History @httpOperation(
+    subgraph: "Weather"
+    path: "/history/subhourly?city={args.city}&country={args.country}"
+    httpMethod: GET
+    queryParamArgMap: "{\"state\":\"state\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_subhourly_by_city_by_country"
+    type: "History"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a City ID.
+  """
+  history_subhourly_by_city_id(
+    """
+    City ID. Example: 4487042
+    """
+    city_id: String!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_subhourly_by_city_id_units @source(
+      name: "units"
+      type: "queryInput_history_subhourly_by_city_id_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_subhourly_by_city_id_lang @source(
+      name: "lang"
+      type: "queryInput_history_subhourly_by_city_id_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_subhourly_by_city_id_tz @source(
+      name: "tz"
+      type: "queryInput_history_subhourly_by_city_id_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistorySubhourly @httpOperation(
+    subgraph: "Weather"
+    path: "/history/subhourly?city_id={args.city_id}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_subhourly_by_city_id"
+    type: "HistorySubhourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a lat, and lon.
+  """
+  history_subhourly_by_lat_by_lon(
+    """
+    Latitude component of location.
+    """
+    lat: Float!
+    """
+    Longitude component of location.
+    """
+    lon: Float!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_units @source(
+      name: "units"
+      type: "queryInput_history_subhourly_by_lat_by_lon_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_lang @source(
+      name: "lang"
+      type: "queryInput_history_subhourly_by_lat_by_lon_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_tz @source(
+      name: "tz"
+      type: "queryInput_history_subhourly_by_lat_by_lon_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistorySubhourly @httpOperation(
+    subgraph: "Weather"
+    path: "/history/subhourly?lat={args.lat}&lon={args.lon}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_subhourly_by_lat_by_lon"
+    type: "HistorySubhourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a Postal Code.
+  """
+  history_subhourly_by_postal_code(
+    """
+    Postal Code. Example: 28546
+    """
+    postal_code: String!
+    """
+    Country Code (2 letter).
+    """
+    country: String
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH)
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_subhourly_by_postal_code_units @source(
+      name: "units"
+      type: "queryInput_history_subhourly_by_postal_code_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_subhourly_by_postal_code_lang @source(
+      name: "lang"
+      type: "queryInput_history_subhourly_by_postal_code_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_subhourly_by_postal_code_tz @source(
+      name: "tz"
+      type: "queryInput_history_subhourly_by_postal_code_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistorySubhourly @httpOperation(
+    subgraph: "Weather"
+    path: "/history/subhourly?postal_code={args.postal_code}"
+    httpMethod: GET
+    queryParamArgMap: "{\"country\":\"country\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_subhourly_by_postal_code"
+    type: "HistorySubhourly"
+    subgraph: "Weather"
+  )
+  """
+  Returns Historical Observations - Given a station ID.
+  """
+  history_subhourly_by_station(
+    """
+    Station ID.
+    """
+    station: String!
+    """
+    Start Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    start_date: String!
+    """
+    End Date (YYYY-MM-DD or YYYY-MM-DD:HH).
+    """
+    end_date: String!
+    units: MyTestWeather_queryInput_history_subhourly_by_station_units @source(
+      name: "units"
+      type: "queryInput_history_subhourly_by_station_units"
+      subgraph: "Weather"
+    )
+    lang: MyTestWeather_queryInput_history_subhourly_by_station_lang @source(
+      name: "lang"
+      type: "queryInput_history_subhourly_by_station_lang"
+      subgraph: "Weather"
+    )
+    tz: MyTestWeather_queryInput_history_subhourly_by_station_tz @source(
+      name: "tz"
+      type: "queryInput_history_subhourly_by_station_tz"
+      subgraph: "Weather"
+    )
+    """
+    Wraps return in jsonp callback. Example: callback=func
+    """
+    callback: String
+    """
+    Your registered API key.
+    """
+    key: String
+  ): MyTestWeather_HistorySubhourly @httpOperation(
+    subgraph: "Weather"
+    path: "/history/subhourly?station={args.station}"
+    httpMethod: GET
+    queryParamArgMap: "{\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"units\":\"units\",\"lang\":\"lang\",\"tz\":\"tz\",\"callback\":\"callback\",\"key\":\"key\"}"
+  ) @source(
+    name: "history_subhourly_by_station"
+    type: "HistorySubhourly"
+    subgraph: "Weather"
+  )
+}
+
+type MyTestWeather_WeatherAlert @source(name: "WeatherAlert", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  alerts: [MyTestWeather_WeatherAlertGroup] @source(name: "alerts", type: "[WeatherAlertGroup]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: Float
+  """
+  Longitude
+  """
+  lon: Float
+}
+
+type MyTestWeather_WeatherAlertGroup @source(name: "WeatherAlertGroup", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  alerts: [String]
+  """
+  Full description of weather alert
+  """
+  description: String
+  """
+  Issued time local
+  """
+  effective_local: String
+  """
+  Issued time UTC
+  """
+  effective_utc: String
+  """
+  Expiration time local
+  """
+  expires_local: String
+  """
+  Expiration time UTC
+  """
+  expires_utc: String
+  """
+  Severity of weather. (Advisory | Watch | Warning)
+  """
+  severity: String
+  """
+  Brief description of weather alert
+  """
+  title: String
+  """
+  URI to weather alert
+  """
+  uri: MyTestWeather_URL @source(name: "uri", type: "URL", subgraph: "Weather") 
+}
+
+type MyTestWeather_AQCurrentGroup @source(name: "AQCurrentGroup", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City Name
+  """
+  city_name: String
+  """
+  Country Abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_AQCurrent] @source(name: "data", type: "[AQCurrent]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  State Abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_AQCurrent @source(name: "AQCurrent", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Cloud cover as a percentage (%)
+  """
+  aqi: Int
+  """
+  Concentration of NO2 (µg/m³)
+  """
+  no2: Float
+  """
+  Concentration of O3 (µg/m³)
+  """
+  o3: Float
+  """
+  Concentration of PM 10 (µg/m³)
+  """
+  pm10: Float
+  """
+  Concentration of PM 2.5 (µg/m³)
+  """
+  pm25: Float
+  """
+  Concentration of SO2 (µg/m³)
+  """
+  so2: Float
+}
+
+type MyTestWeather_CurrentObsGroup @source(name: "CurrentObsGroup", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Count of found observations
+  """
+  count: Int
+  data: [MyTestWeather_CurrentObs] @source(name: "data", type: "[CurrentObs]", subgraph: "Weather") 
+}
+
+type MyTestWeather_CurrentObs @source(name: "CurrentObs", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Apparent temperature - Default (C)
+  """
+  app_temp: Float
+  """
+  Air quality index (US EPA standard 0 to +500)
+  """
+  aqi: Float
+  """
+  City name (closest)
+  """
+  city_name: String
+  """
+  Cloud cover (%)
+  """
+  clouds: Int
+  """
+  Country abbreviation
+  """
+  country_code: String
+  """
+  Cycle Hour (UTC) of observation
+  """
+  datetime: String
+  """
+  Dew point temperature - default (C)
+  """
+  dewpt: Float
+  """
+  Diffuse horizontal irradiance (W/m^2)
+  """
+  dhi: Float
+  """
+  Direct normal irradiance (W/m^2)
+  """
+  dni: Float
+  """
+  Current solar elevation angle (Degrees)
+  """
+  elev_angle: Float
+  """
+  Global horizontal irradiance (W/m^2)
+  """
+  ghi: Float
+  """
+  Wind gust speed - Default (m/s)
+  """
+  gust: Float
+  """
+  Current solar hour angle (Degrees)
+  """
+  hour_angle: Float
+  """
+  Latitude
+  """
+  lat: Float
+  """
+  Longitude
+  """
+  lon: Float
+  """
+  Full time (UTC) of observation (YYYY-MM-DD HH:MM)
+  """
+  ob_time: String
+  """
+  Part of the day (d = day, n = night)
+  """
+  pod: String
+  """
+  Precipitation in last hour - Default (mm)
+  """
+  precip: Float
+  """
+  Pressure (mb)
+  """
+  pres: Float
+  """
+  Relative humidity (%)
+  """
+  rh: Int
+  """
+  Mean sea level pressure in millibars (mb)
+  """
+  slp: Float
+  """
+  Snowfall in last hour - Default (mm)
+  """
+  snow: Float
+  """
+  Estimated solar radiation (W/m^2)
+  """
+  solar_rad: Float
+  """
+  List of data sources used in response
+  """
+  sources: [String]
+  """
+  State abbreviation
+  """
+  state_code: String
+  """
+  Source Station ID
+  """
+  station: String
+  """
+  Time (UTC) of Sunrise (HH:MM)
+  """
+  sunrise: String
+  """
+  Time (UTC) of Sunset (HH:MM)
+  """
+  sunset: String
+  """
+  Temperature - Default (C)
+  """
+  temp: Float
+  """
+  Local IANA time zone
+  """
+  timezone: String
+  """
+  Unix Timestamp
+  """
+  ts: Float
+  """
+  UV Index
+  """
+  uv: Float
+  """
+  Visibility - default (M)
+  """
+  vis: Int
+  weather: MyTestWeather_query_current_by_cities_data_items_weather @source(
+    name: "weather"
+    type: "query_current_by_cities_data_items_weather"
+    subgraph: "Weather"
+  )
+  """
+  Cardinal wind direction
+  """
+  wind_cdir: String
+  """
+  Cardinal wind direction (text)
+  """
+  wind_cdir_full: String
+  """
+  Wind direction (degrees)
+  """
+  wind_dir: Int
+  """
+  Wind speed - Default (m/s)
+  """
+  wind_speed: Float
+  MyDescription: String @hoist(subgraph: "Weather", pathConfig: ["weather", "description"]) 
+}
+
+type MyTestWeather_query_current_by_cities_data_items_weather @source(name: "query_current_by_cities_data_items_weather", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Weather Condition code
+  """
+  code: String
+  """
+  Weather Condition description
+  """
+  description: String
+  """
+  Icon code for forecast image display
+  """
+  icon: String
+}
+
+type MyTestWeather_AQHourly @source(name: "AQHourly", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City Name
+  """
+  city_name: String
+  """
+  Country Abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_AQHour] @source(name: "data", type: "[AQHour]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  State Abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_AQHour @source(name: "AQHour", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Cloud cover as a percentage (%)
+  """
+  aqi: Int
+  """
+  Concentration of NO2 (µg/m³)
+  """
+  no2: Float
+  """
+  Concentration of O3 (µg/m³)
+  """
+  o3: Float
+  """
+  Concentration of PM 10 (µg/m³)
+  """
+  pm10: Float
+  """
+  Concentration of PM 2.5 (µg/m³)
+  """
+  pm25: Float
+  """
+  Concentration of SO2 (µg/m³)
+  """
+  so2: Float
+  """
+  Timestamp in local time
+  """
+  timestamp_local: String
+  """
+  Timestamp UTC
+  """
+  timestamp_utc: String
+  """
+  Unix Timestamp
+  """
+  ts: Float
+}
+
+type MyTestWeather_ForecastDay @source(name: "ForecastDay", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City Name
+  """
+  city_name: String
+  """
+  Country Abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_Forecast] @source(name: "data", type: "[Forecast]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  State Abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_Forecast @source(name: "Forecast", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Apparent Maximum daily Temperature - default (C)
+  """
+  app_max_temp: Float
+  """
+  Apparent Minimum daily Temperature - default (C)
+  """
+  app_min_temp: Float
+  """
+  Cloud cover as a percentage (%)
+  """
+  clouds: Int
+  """
+  Date in format "YYYY-MM-DD:HH". All datetime is in (UTC)
+  """
+  datetime: String
+  """
+  Dewpoint (Average) - default (C)
+  """
+  dewpt: Float
+  """
+  [Deprecated] Max direct component of solar insolation (W/m^2)
+  """
+  max_dhi: Float
+  """
+  Maximum daily Temperature - default (C)
+  """
+  max_temp: Float
+  """
+  Minimum daily Temperature - default (C)
+  """
+  min_temp: Float
+  """
+  Moon phase
+  """
+  moon_phase: Float
+  """
+  Moonrise unix timestamp
+  """
+  moonrise_ts: Int
+  """
+  Moonset unix timestamp
+  """
+  moonset_ts: Int
+  """
+  Part of the day (d = day, n = night)
+  """
+  pod: String
+  """
+  Chance of Precipitation as a percentage (%)
+  """
+  pop: Float
+  """
+  Accumulated precipitation since last forecast point - default (mm)
+  """
+  precip: Float
+  """
+  Pressure (mb)
+  """
+  pres: Float
+  """
+  Relative Humidity as a percentage (%)
+  """
+  rh: Int
+  """
+  Mean Sea level pressure (mb)
+  """
+  slp: Float
+  """
+  Accumulated snowfall since last forecast point - default (mm)
+  """
+  snow: Float
+  """
+  Snow Depth - default (mm)
+  """
+  snow_depth: Float
+  """
+  Sunrise unix timestamp
+  """
+  sunrise_ts: Int
+  """
+  Sunset unix timestamp
+  """
+  sunset_ts: Int
+  """
+  Temperature (Average) - default (C)
+  """
+  temp: Float
+  """
+  Timestamp in local time
+  """
+  timestamp_local: String
+  """
+  Timestamp UTC
+  """
+  timestamp_utc: String
+  """
+  Unix Timestamp
+  """
+  ts: Float
+  """
+  UV Index
+  """
+  uv: Float
+  """
+  Average Visibility default (KM)
+  """
+  vis: Float
+  weather: MyTestWeather_query_forecast_daily_by_city_by_country_data_items_weather @source(
+    name: "weather"
+    type: "query_forecast_daily_by_city_by_country_data_items_weather"
+    subgraph: "Weather"
+  )
+  """
+  Cardinal wind direction
+  """
+  wind_cdir: String
+  """
+  Cardinal wind direction (text)
+  """
+  wind_cdir_full: String
+  """
+  Wind direction
+  """
+  wind_dir: Int
+  """
+  Wind Speed (default m/s)
+  """
+  wind_spd: Float
+}
+
+type MyTestWeather_query_forecast_daily_by_city_by_country_data_items_weather @source(
+  name: "query_forecast_daily_by_city_by_country_data_items_weather"
+  subgraph: "Weather"
+) @join__type(graph: WEATHER)  {
+  """
+  Weather Condition code
+  """
+  code: String
+  """
+  Weather Condition description
+  """
+  description: String
+  """
+  Icon code for forecast image display
+  """
+  icon: String
+}
+
+type MyTestWeather_EnergyObsGroupForecast @source(name: "EnergyObsGroupForecast", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City name (closest)
+  """
+  city_name: String
+  """
+  Country abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_EnergyObsSeries] @source(name: "data", type: "[EnergyObsSeries]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  State abbreviation
+  """
+  state_code: String
+  """
+  Degree day threshold units
+  """
+  threshold_units: String
+  """
+  Degree day threshold
+  """
+  threshold_value: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_EnergyObsSeries @source(name: "EnergyObsSeries", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Cooling degree days
+  """
+  cdd: Float
+  """
+  Average cloud cover (%)
+  """
+  clouds: Int
+  """
+  Date
+  """
+  date: MyTestWeather_Date @source(name: "date", type: "Date", subgraph: "Weather") 
+  """
+  Average dew point temperature - Default (C)
+  """
+  dewpt: Float
+  """
+  Heating degree days
+  """
+  hdd: Float
+  """
+  Total precipitation in period - Default (mm)
+  """
+  precip: Float
+  """
+  Average Relative humidity (%)
+  """
+  rh: Int
+  """
+  Total snowfall in period - Default (mm)
+  """
+  snow: Float
+  """
+  Average number of daily sun hours - # hours where Solar GHI > 1000 W/m^2
+  """
+  sun_hours: Float
+  """
+  Total diffuse horizontal solar irradiance (W/m^2)
+  """
+  t_dhi: Float
+  """
+  Total direct normal solar irradiance (W/m^2)
+  """
+  t_dni: Float
+  """
+  Total global horizontal solar irradiance (W/m^2)
+  """
+  t_ghi: Float
+  """
+  Average temperature - Default (C)
+  """
+  temp: Float
+  """
+  Average wind direction (Degrees)
+  """
+  wind_dir: Int
+  """
+  Average wind speed - Default (m/s)
+  """
+  wind_spd: Float
+}
+
+type MyTestWeather_ForecastHourly @source(name: "ForecastHourly", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City Name
+  """
+  city_name: String
+  """
+  Country Abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_ForecastHour] @source(name: "data", type: "[ForecastHour]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  State Abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_ForecastHour @source(name: "ForecastHour", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Apparent Temperature - Default (C)
+  """
+  app_temp: Float
+  """
+  Cloud cover as a percentage (%)
+  """
+  clouds: Int
+  """
+  Date in format "YYYY-MM-DD:HH". All datetime is in (UTC)
+  """
+  datetime: String
+  """
+  Dewpoint - Default (C)
+  """
+  dewpt: Float
+  """
+  Diffuse normal solar irradiance (W/m^2)
+  """
+  dhi: Float
+  """
+  Direct normal solar irradiance (W/m^2)
+  """
+  dni: Float
+  """
+  Global horizontal solar irradiance (W/m^2)
+  """
+  ghi: Float
+  """
+  Part of day (d = day, n = night)
+  """
+  pod: String
+  """
+  Chance of Precipitation as a percentage (%)
+  """
+  pop: Float
+  """
+  Accumulated precipitation since last forecast point. Default (mm)
+  """
+  precip: Float
+  """
+  Pressure (mb)
+  """
+  pres: Float
+  """
+  Relative Humidity as a percentage (%)
+  """
+  rh: Int
+  """
+  Mean Sea level pressure (mb)
+  """
+  slp: Float
+  """
+  Accumulated snowfall since last forecast point - Default (mm)
+  """
+  snow: Float
+  """
+  Snow depth - Default (mm)
+  """
+  snow_depth: Float
+  """
+  Estimated solar radiation (W/m^2)
+  """
+  solar_rad: Float
+  """
+  Temperature - Default (C)
+  """
+  temp: Float
+  """
+  Timestamp in local time
+  """
+  timestamp_local: String
+  """
+  Timestamp UTC
+  """
+  timestamp_utc: String
+  """
+  Unix Timestamp
+  """
+  ts: Float
+  """
+  UV Index
+  """
+  uv: Float
+  """
+  Visibility - Default (KM)
+  """
+  vis: Float
+  weather: MyTestWeather_query_forecast_hourly_by_city_by_country_data_items_weather @source(
+    name: "weather"
+    type: "query_forecast_hourly_by_city_by_country_data_items_weather"
+    subgraph: "Weather"
+  )
+  """
+  Cardinal wind direction
+  """
+  wind_cdir: String
+  """
+  Cardinal wind direction (text)
+  """
+  wind_cdir_full: String
+  """
+  Wind direction
+  """
+  wind_dir: Int
+  """
+  Wind Gust Speed - Default (m/s)
+  """
+  wind_gust_spd: Float
+  """
+  Wind Speed - Default (m/s)
+  """
+  wind_spd: Float
+}
+
+type MyTestWeather_query_forecast_hourly_by_city_by_country_data_items_weather @source(
+  name: "query_forecast_hourly_by_city_by_country_data_items_weather"
+  subgraph: "Weather"
+) @join__type(graph: WEATHER)  {
+  """
+  Weather Condition code
+  """
+  code: String
+  """
+  Weather Condition description
+  """
+  description: String
+  """
+  Icon code for forecast image display
+  """
+  icon: String
+}
+
+type MyTestWeather_HistoryDay @source(name: "HistoryDay", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City name (Closest)
+  """
+  city_name: String
+  """
+  Country abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_HistoryDayObj] @source(name: "data", type: "[HistoryDayObj]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  List of data sources used in response
+  """
+  sources: [String]
+  """
+  State abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_HistoryDayObj @source(name: "HistoryDayObj", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Date in format "YYYY-MM-DD". All datetime is in (UTC)
+  """
+  datetime: MyTestWeather_Date @source(name: "datetime", type: "Date", subgraph: "Weather") 
+  """
+  Average dewpoint - Default (C)
+  """
+  dewpt: Float
+  """
+  Average hourly diffuse horizontal solar irradiance (W/m^2)
+  """
+  dhi: Int
+  """
+  Average direct normal solar irradiance (W/m^2)
+  """
+  dni: Int
+  """
+  Average hourly global horizontal solar irradiance (W/m^2)
+  """
+  ghi: Int
+  """
+  Max temperature - Default (C)
+  """
+  max_temp: Float
+  """
+  Time of max memperature - Unix Timestamp
+  """
+  max_temp_ts: Float
+  """
+  Max UV Index (1-11+)
+  """
+  max_uv: Float
+  """
+  Direction of wind at time of max 2min wind (degrees)
+  """
+  max_wind_dir: Int
+  """
+  Max 2min Wind Speed - default (m/s)
+  """
+  max_wind_spd: Float
+  """
+  Time of max 2min wind - unix timestamp
+  """
+  max_wind_spd_ts: Float
+  """
+  Min temperature - Default (C)
+  """
+  min_temp: Float
+  """
+  Time of max temperature - unix timestamp
+  """
+  min_temp_ts: Float
+  """
+  Liquid equivalent precipitation - default (mm)
+  """
+  precip: Float
+  """
+  Satellite estimated liquid equivalent precipitation - default (mm)
+  """
+  precip_gpm: Float
+  """
+  Average pressure (mb)
+  """
+  pres: Float
+  """
+  Data revision status (interim or final)
+  """
+  revision_status: String
+  """
+  Average relative humidity as a percentage (%)
+  """
+  rh: Int
+  """
+  Average sea level pressure (mb)
+  """
+  slp: Float
+  """
+  Snowfall - default (mm)
+  """
+  snow: Float
+  """
+  Snow Depth - default (mm)
+  """
+  snow_depth: Float
+  """
+  Total diffuse horizontal solar irradiance (W/m^2)
+  """
+  t_dhi: Int
+  """
+  Total direct normal solar irradiance (W/m^2)
+  """
+  t_dni: Int
+  """
+  Total global horizontal solar irradiance (W/m^2)
+  """
+  t_ghi: Int
+  """
+  Average temperature - Default (C)
+  """
+  temp: Float
+  """
+  Unix timestamp of datetime (Midnight UTC)
+  """
+  ts: Int
+  """
+  Average wind direction (degrees)
+  """
+  wind_dir: Int
+  """
+  Wind gust speed - default (m/s)
+  """
+  wind_gust_spd: Float
+  """
+  Average wind speed - default (m/s)
+  """
+  wind_spd: Float
+}
+
+type MyTestWeather_EnergyObsGroup @source(name: "EnergyObsGroup", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Count of found observations
+  """
+  count: Int
+  data: [MyTestWeather_EnergyObs] @source(name: "data", type: "[EnergyObs]", subgraph: "Weather") 
+  """
+  End Date
+  """
+  end_date: Int
+  """
+  Start Date
+  """
+  start_date: Int
+}
+
+type MyTestWeather_EnergyObs @source(name: "EnergyObs", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Cooling degree days
+  """
+  cdd: Float
+  """
+  City name (closest)
+  """
+  city_name: String
+  """
+  Average cloud cover (%)
+  """
+  clouds: Int
+  """
+  Country abbreviation
+  """
+  country_code: String
+  """
+  Average dew point temperature - Default (C)
+  """
+  dewpt: Float
+  """
+  Heating degree days
+  """
+  hdd: Float
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  Total precipitation in period - Default (mm)
+  """
+  precip: Float
+  """
+  Average Relative humidity (%)
+  """
+  rh: Int
+  """
+  Total snowfall in period - Default (mm)
+  """
+  snow: Float
+  """
+  List of data sources used in response
+  """
+  sources: [String]
+  """
+  State abbreviation
+  """
+  state_code: String
+  """
+  Nearest Station ID [DEPRECATED]
+  """
+  station_id: String
+  """
+  Average number of daily sun hours - # hours where Solar GHI > 1000 W/m^2
+  """
+  sun_hours: Float
+  """
+  Total diffuse horizontal solar irradiance (W/m^2)
+  """
+  t_dhi: Float
+  """
+  Total direct normal solar irradiance (W/m^2)
+  """
+  t_dni: Float
+  """
+  Total global horizontal solar irradiance (W/m^2)
+  """
+  t_ghi: Float
+  """
+  Average temperature - Default (C)
+  """
+  temp: Float
+  """
+  Local IANA time zone
+  """
+  timezone: String
+  """
+  Average wind direction (Degrees)
+  """
+  wind_dir: Int
+  """
+  Average wind speed - Default (m/s)
+  """
+  wind_spd: Float
+}
+
+type MyTestWeather_History @source(name: "History", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City name (Closest)
+  """
+  city_name: String
+  """
+  Country abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_HistoryObj] @source(name: "data", type: "[HistoryObj]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  List of data sources used in response
+  """
+  sources: [String]
+  """
+  State abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+type MyTestWeather_HistoryObj @source(name: "HistoryObj", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  Apparent Temperature or Wind Chill/Heat Index (Default Celcius)
+  """
+  app_temp: Float
+  """
+  Azimuth angle (Degrees)
+  """
+  azimuth: Float
+  """
+  Cloud Cover 0-100 (%)
+  """
+  clouds: Int
+  """
+  Date in format "YYYY-MM-DD:HH". All datetime is in (UTC)
+  """
+  datetime: String
+  """
+  Dew point (Default Celcius)
+  """
+  dewpt: Int
+  """
+  Diffuse normal solar irradiance (W/m^2)
+  """
+  dhi: Float
+  """
+  Direct normal solar irradiance (W/m^2)
+  """
+  dni: Float
+  """
+  Solar elevation angle (Degrees)
+  """
+  elev_angle: Float
+  """
+  Global horizontal solar irradiance (W/m^2)
+  """
+  ghi: Float
+  """
+  Solar hour angle (Degrees)
+  """
+  h_angle: Float
+  """
+  Part of the day (d = day, n = night)
+  """
+  pod: String
+  """
+  Liquid equivalent precipitation - Default (mm)
+  """
+  precip: Float
+  """
+  Pressure (mb)
+  """
+  pres: Float
+  """
+  Data revision status (interim or final)
+  """
+  revision_status: String
+  """
+  Relative Humidity as a percentage (%)
+  """
+  rh: Int
+  """
+  Sea level pressure (mb)
+  """
+  slp: Float
+  """
+  Snowfall - Default (mm)
+  """
+  snow: Float
+  """
+  Estimated solar radiation (W/m^2)
+  """
+  solar_rad: Float
+  """
+  Temperature (Default Celcius)
+  """
+  temp: Float
+  """
+  Timestamp in local time
+  """
+  timestamp_local: String
+  """
+  Timestamp UTC
+  """
+  timestamp_utc: String
+  """
+  Unix Timestamp
+  """
+  ts: Float
+  """
+  UV Index (1-11+)
+  """
+  uv: Float
+  """
+  Visibility (KM)
+  """
+  vis: Float
+  weather: MyTestWeather_query_history_hourly_by_city_by_country_data_items_weather @source(
+    name: "weather"
+    type: "query_history_hourly_by_city_by_country_data_items_weather"
+    subgraph: "Weather"
+  )
+  """
+  Wind direction (Degrees)
+  """
+  wind_dir: Int
+  """
+  Wind Gust Speed - Default (m/s)
+  """
+  wind_gust_spd: Float
+  """
+  Wind Speed (Default m/s)
+  """
+  wind_spd: Float
+}
+
+type MyTestWeather_query_history_hourly_by_city_by_country_data_items_weather @source(
+  name: "query_history_hourly_by_city_by_country_data_items_weather"
+  subgraph: "Weather"
+) @join__type(graph: WEATHER)  {
+  """
+  Weather Condition code
+  """
+  code: String
+  """
+  Weather Condition description
+  """
+  description: String
+  """
+  Icon code for forecast image display
+  """
+  icon: String
+}
+
+type MyTestWeather_HistorySubhourly @source(name: "HistorySubhourly", subgraph: "Weather")  @join__type(graph: WEATHER)  {
+  """
+  City name (Closest)
+  """
+  city_name: String
+  """
+  Country abbreviation
+  """
+  country_code: String
+  data: [MyTestWeather_HistoryObj] @source(name: "data", type: "[HistoryObj]", subgraph: "Weather") 
+  """
+  Latitude
+  """
+  lat: String
+  """
+  Longitude
+  """
+  lon: String
+  """
+  List of data sources used in response
+  """
+  sources: [String]
+  """
+  State abbreviation
+  """
+  state_code: String
+  """
+  Local IANA time zone
+  """
+  timezone: String
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_cities_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+enum MyTestWeather_t_const @join__type(graph: WEATHER)  {
+  t @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_cities_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+enum MyTestWeather_minutely_const @join__type(graph: WEATHER)  {
+  minutely @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_city_by_country_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_city_by_country_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_city_id_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_city_id_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_lat_by_lon_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_points_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_points_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_postal_code_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_postal_code_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_station_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_station_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_stations_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_current_by_stations_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_city_by_country_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_city_by_country_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_city_id_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_city_id_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_lat_by_lon_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_postal_code_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_daily_by_postal_code_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_energy_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Time period (default: daily)
+"""
+enum MyTestWeather_queryInput_forecast_energy_by_lat_by_lon_tp @join__type(graph: WEATHER)  {
+  hourly @join__enumValue(graph: WEATHER) 
+  daily @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_city_by_country_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_city_by_country_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_city_id_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_city_id_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_lat_by_lon_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_postal_code_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_forecast_hourly_by_postal_code_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_city_by_country_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_city_by_country_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_city_id_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_city_id_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_lat_by_lon_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_postal_code_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_postal_code_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_station_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_daily_by_station_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Time period to aggregate by (daily, monthly)
+"""
+enum MyTestWeather_queryInput_history_energy_by_lat_by_lon_tp @join__type(graph: WEATHER)  {
+  hourly @join__enumValue(graph: WEATHER) 
+  daily @join__enumValue(graph: WEATHER) 
+  monthly @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_energy_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_city_by_country_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_city_by_country_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_hourly_by_city_by_country_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_city_id_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_city_id_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_hourly_by_city_id_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_lat_by_lon_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_hourly_by_lat_by_lon_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_postal_code_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_postal_code_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_hourly_by_postal_code_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_station_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_hourly_by_station_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_hourly_by_station_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_city_by_country_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_city_by_country_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_city_by_country_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_city_id_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_city_id_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_city_id_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_lat_by_lon_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_postal_code_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_postal_code_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_postal_code_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Convert to units. Default Metric See <a target='blank' href='/api/requests'>units field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_station_units @join__type(graph: WEATHER)  {
+  S @join__enumValue(graph: WEATHER) 
+  I @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Language (Default: English) See <a target='blank' href='/api/requests'>language field description</a>
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_station_lang @join__type(graph: WEATHER)  {
+  ar @join__enumValue(graph: WEATHER) 
+  az @join__enumValue(graph: WEATHER) 
+  be @join__enumValue(graph: WEATHER) 
+  bg @join__enumValue(graph: WEATHER) 
+  bs @join__enumValue(graph: WEATHER) 
+  ca @join__enumValue(graph: WEATHER) 
+  cs @join__enumValue(graph: WEATHER) 
+  de @join__enumValue(graph: WEATHER) 
+  fi @join__enumValue(graph: WEATHER) 
+  fr @join__enumValue(graph: WEATHER) 
+  el @join__enumValue(graph: WEATHER) 
+  es @join__enumValue(graph: WEATHER) 
+  et @join__enumValue(graph: WEATHER) 
+  hr @join__enumValue(graph: WEATHER) 
+  hu @join__enumValue(graph: WEATHER) 
+  id @join__enumValue(graph: WEATHER) 
+  it @join__enumValue(graph: WEATHER) 
+  is @join__enumValue(graph: WEATHER) 
+  kw @join__enumValue(graph: WEATHER) 
+  nb @join__enumValue(graph: WEATHER) 
+  nl @join__enumValue(graph: WEATHER) 
+  pl @join__enumValue(graph: WEATHER) 
+  pt @join__enumValue(graph: WEATHER) 
+  ro @join__enumValue(graph: WEATHER) 
+  ru @join__enumValue(graph: WEATHER) 
+  sk @join__enumValue(graph: WEATHER) 
+  sl @join__enumValue(graph: WEATHER) 
+  sr @join__enumValue(graph: WEATHER) 
+  sv @join__enumValue(graph: WEATHER) 
+  tr @join__enumValue(graph: WEATHER) 
+  uk @join__enumValue(graph: WEATHER) 
+  zh @join__enumValue(graph: WEATHER) 
+  zh_tw @join__enumValue(graph: WEATHER) 
+}
+
+"""
+Assume utc (default) or local time for start_date, end_date
+"""
+enum MyTestWeather_queryInput_history_subhourly_by_station_tz @join__type(graph: WEATHER)  {
+  local @join__enumValue(graph: WEATHER) 
+  utc @join__enumValue(graph: WEATHER) 
+}
+
+enum MyTestWeather_HTTPMethod @join__type(graph: WEATHER)  {
+  GET @join__enumValue(graph: WEATHER) 
+  HEAD @join__enumValue(graph: WEATHER) 
+  POST @join__enumValue(graph: WEATHER) 
+  PUT @join__enumValue(graph: WEATHER) 
+  DELETE @join__enumValue(graph: WEATHER) 
+  CONNECT @join__enumValue(graph: WEATHER) 
+  OPTIONS @join__enumValue(graph: WEATHER) 
+  TRACE @join__enumValue(graph: WEATHER) 
+  PATCH @join__enumValue(graph: WEATHER) 
+}
+    
